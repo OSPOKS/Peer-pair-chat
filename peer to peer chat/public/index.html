@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PeerJS Chat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .chat {
+      width: 100%;
+      height: 500px;
+      border: 1px solid #ccc;
+      overflow: auto;
+    }
+    .input-area {
+      margin-top: 20px;
+    }
+    .input-area input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .input-area button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #009688;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat" id="chat"></div>
+  <div class="input-area">
+    <input type="text" id="input" placeholder="Type a message">
+    <button id="send">Send</button>
+  </div>
+  <script src="/peerjs/peer.min.js"></script>
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+    const sendButton = document.getElementById('send');
+    const myPeer = new Peer(undefined, {
+      host: '/',
+      port: 9000
+    });
+    const peers = {};
+
+    myPeer.on('open', () => {
+      console.log('My peer ID is:', myPeer.id);
+    });
+
+    sendButton.addEventListener('click', () => {
+      const message = input.value;
+      if (message) {
+        addMessageToChat('Me', message);
+        input.value = '';
+                  for (const peerId in peers) {
+            const conn = peers[peerId];
+            conn.send({ type: 'message', data: message });
+          }
+        }
+      }
+    );
+
+    myPeer.on('connection', (conn) => {
+      conn.on('data', (data) => {
+        if (data.type === 'message') {
+          addMessageToChat(data.from, data.data);
+        }
+      });
+      conn.on('close', () => {
+        delete peers[conn.peer];
+      });
+      peers[conn.peer] = conn;
+    });
+
+    function addMessageToChat(from, message) {
+      const messageHTML = `<p><strong>${from}:</strong> ${message}</p>`;
+      chat.innerHTML += messageHTML;
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+</body>
+</html>
