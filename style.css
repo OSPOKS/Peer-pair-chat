@@ -1,0 +1,26 @@
+body {
+    font-family: sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+#room-container, #chat-container {
+    margin: 20px auto;
+    width: 500px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+#messages {
+    list-style: none;
+    padding: 0;
+}
+
+#message-input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
