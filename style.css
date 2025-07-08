@@ -1,81 +1,199 @@
-body {
-  font-family: Arial, sans-serif;
+* {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #1e1e2f;
+  color: #e4e6eb;
   height: 100vh;
-  background-color: #f5f5f5;
-}
-
-.chat-container {
-  width: 400px;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  overflow: hidden;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
-h1 {
-  background-color: #007BFF;
-  color: white;
-  width: 100%;
-  text-align: center;
-  margin: 0;
-  padding: 10px 0;
-}
-
-#connection-info {
-  padding: 10px;
+.telegram-wrapper {
   display: flex;
-  gap: 5px;
-  flex-direction: column;
-  width: 90%;
+  width: 100%;
+  max-width: 1200px;
+  height: 90vh;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  background: #2a2f45;
 }
 
-#chat-box {
-  width: 100%;
-  flex-grow: 1;
+.sidebar {
+  width: 300px;
+  background-color: #222738;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-
-#messages {
-  padding: 10px;
-  flex-grow: 1;
+  border-right: 1px solid #3c3f50;
+  gap: 1.2rem;
   overflow-y: auto;
-  border-top: 1px solid #ddd;
 }
 
-#messages div {
-  margin-bottom: 10px;
-}
-
-#message-input {
+.peer-id-display,
+.connect-box,
+.log-panel {
+  background: #1a1d2c;
+  padding: 1rem;
+  border-radius: 8px;
   display: flex;
-  gap: 5px;
-  padding: 10px;
-  border-top: 1px solid #ddd;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-input, button {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+input {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: none;
+  background: #32364a;
+  color: white;
 }
 
 button {
-  background-color: #007BFF;
-  color: white;
-  cursor: pointer;
+  padding: 0.5rem;
+  background: #4cc9f0;
+  color: black;
   border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
+#qr-code canvas {
+  margin-top: 0.5rem;
+  max-width: 100%;
+}
+
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #1b1e2f;
+}
+
+.chat-header {
+  padding: 1rem;
+  background-color: #212537;
+  border-bottom: 1px solid #3c3f50;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+#typing-indicator {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  display: block;
+  margin-top: 4px;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.message {
+  max-width: 70%;
+  padding: 0.7rem 1rem;
+  border-radius: 15px;
+  line-height: 1.4;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.you {
+  align-self: flex-end;
+  background: #4cc9f0;
+  color: #000;
+}
+
+.message.them {
+  align-self: flex-start;
+  background: #3a3f58;
+  color: #fff;
+}
+
+.message small {
+  font-size: 0.7rem;
+  color: #aaa;
+  margin-top: 0.3rem;
+  align-self: flex-end;
+}
+
+.message strong {
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-bottom: 0.2rem;
+}
+
+.message-input {
+  padding: 1rem;
+  display: flex;
+  gap: 10px;
+  background: #212537;
+  border-top: 1px solid #3c3f50;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 25px;
+  border: none;
+  background: #2c2f44;
+  color: #e4e6eb;
+  font-size: 0.95rem;
+}
+
+.message-input button {
+  background: #4cc9f0;
+  border: none;
+  border-radius: 25px;
+  padding: 0.8rem 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000;
+  transition: background 0.2s ease;
+}
+
+.message-input button:hover {
+  background: #38bdf8;
+}
+
+.log-box {
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  color: #ccc;
+  border: 1px solid #3c3f50;
+  padding: 5px;
+  background: #10121b;
+}
+
+@media (max-width: 600px) {
+  .telegram-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #3c3f50;
+  }
+  .chat-window {
+    height: 100vh;
+  }
 }
