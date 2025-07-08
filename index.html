@@ -1,28 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Peer-to-Peer Chat</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure P2P Chat</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-container">
-    <h1>Peer-to-Peer Chat</h1>
-    <div id="connection-info">
-      <input id="peer-id" type="text" placeholder="Your Peer ID" readonly>
-      <input id="connect-id" type="text" placeholder="Enter Peer ID to connect">
-      <button id="connect-btn">Connect</button>
-    </div>
-    <div id="chat-box">
-      <div id="messages"></div>
-      <div id="message-input">
-        <input id="message" type="text" placeholder="Type your message">
-        <button id="send-btn">Send</button>
+  <div class="telegram-wrapper">
+    <aside class="sidebar">
+      <h2>🔐 Secure Chat</h2>
+      <label>Your Name:</label>
+      <input id="username" type="text" placeholder="Anonymous (optional)" />
+      
+      <label>Shared Passphrase:</label>
+      <input id="passphrase" type="password" placeholder="Enter shared secret" />
+      
+      <button onclick="initializePeer()">Start</button>
+      
+      <div class="peer-id-display" style="display: none" id="peer-info">
+        <label>Your ID:</label>
+        <span id="your-id">...</span>
+        <button onclick="copyId()">Copy</button>
       </div>
-    </div>
+
+      <label>Connect to Peer ID:</label>
+      <input id="peer-id-input" type="text" />
+      <button onclick="connectToPeer()">Connect</button>
+    </aside>
+
+    <main class="chat-window">
+      <header class="chat-header">
+        <h3 id="chat-status">⏳ Waiting…</h3>
+        <small id="typing-indicator"></small>
+      </header>
+      <div id="chat-box" class="chat-box"></div>
+      <footer class="message-input">
+        <input id="message-input" type="text" placeholder="Type message..." />
+        <button onclick="sendMessage()">Send</button>
+      </footer>
+    </main>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/peerjs@1.4.0/dist/peerjs.min.js"></script>
+
+  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
